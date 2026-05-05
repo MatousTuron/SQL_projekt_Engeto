@@ -11,7 +11,7 @@ Jako dodatečný materiál byla připravena tabulka s makroekonomickými ukazate
 ## Výstupní tabulky
 
 ### `t_matous_turon_project_SQL_primary_final`
-Primární datový podklad. Obsahuje průměrné mzdy, ceny vybraných potravin (chléb konzumní kmínový, mléko polotučné pasterované) a jejich meziroční růst (YoY) za období 2006–2018 pro Českou republiku. Data mezd a cen jsou sjednocena na totožné porovnatelné období.
+Primární datový podklad. Obsahuje průměrné mzdy, ceny vybraných potravin a jejich meziroční růst (YoY) za období 2006–2018 pro Českou republiku. Data mezd a cen jsou sjednocena na totožné porovnatelné období.
 
 **Sloupce:**
 | Sloupec | Popis |
@@ -22,6 +22,11 @@ Primární datový podklad. Obsahuje průměrné mzdy, ceny vybraných potravin 
 | `yoy_price_growth` | meziroční růst ceny v % |
 | `avg_wage` | průměrná hrubá mzda v daném roce (Kč) |
 | `yoy_wage_growth` | meziroční růst mzdy v % |
+| `gdp` | HDP v daném roce (Kč) |
+| `yoy_gdp_growth` | meziroční růst HDP v % |
+| `industry_branch_name` | název ekonomického odvětví |
+| `industry_avg_wage` | průměrná hrubá mzda v odvětví v daném roce (Kč) |
+| `industry_yoy_wage_growth` | meziroční růst mzdy v odvětví v % |
 
 ### `t_matous_turon_project_SQL_secondary_final`
 Dodatečný přehled makroekonomických ukazatelů evropských států za období 2006–2018.
@@ -43,9 +48,9 @@ Dodatečný přehled makroekonomických ukazatelů evropských států za obdob�
 Ve všech sledovaných odvětvích mzdy v období 2006–2018 rostly. Nejvyšší procentuální růst byl zaznamenán ve zdravotní a sociální péči, nejnižší pak v peněžnictví a pojišťovnictví.
 
 ### 2. Kolik litrů mléka a kilogramů chleba bylo možné koupit za průměrnou mzdu v prvním a posledním srovnatelném období?
-Srovnání bylo provedeno mezi lety 2006 a 2018. Výpočet vychází z průměrné mzdy v daném odvětví a průměrné ceny potraviny v daném období — výsledkem je počet kusů (litrů/kilogramů) které si průměrný zaměstnanec mohl pořídit.
+Srovnání bylo provedeno mezi lety 2007 a 2018. Výpočet vychází z průměrné mzdy v daném odvětví a průměrné ceny potraviny v daném období — výsledkem je počet kusů (litrů/kilogramů) které si průměrný zaměstnanec mohl pořídit.
 Nejvyšší cifru mezi výsledky představují litry mléka, které si mohli v roce 2018 za svou mzdu zakoupit pracovníci v informačních a komunikačních technologiích - 2.862l mléka.
-Naopak nejnižší výsledek představují kilogramy chleba, které za svou mzdu dostali v roce 2006 lidé pracující v ubytování, stravování a pohostinství - 724kg chleba.
+Naopak nejnižší výsledek představují kilogramy chleba, které za svou mzdu dostali v roce 2007 lidé pracující v ubytování, stravování a pohostinství - 656kg chleba.
 
 ### 3. Která kategorie potravin zdražuje nejpomaleji?
 Na základě průměrného meziročního růstu cen (YoY) napříč všemi kategoriemi potravin v období 2006–2018 byly identifikovány kategorie s poklesem ceny:
@@ -65,11 +70,11 @@ Nějakou souvislost tedy lze připustit, ale pro vyvození validních závěrů 
 
 ## Poznámky k datům
 
-- Data mezd pocházejí z tabulky `czechia_payroll`, filtrováno na `value_type_code = 5958` (průměrná mzda) a `calculation_code = 200` (přepočtené úvazky).
-- Data cen pocházejí z tabulky `czechia_price`.
-- HDP data pocházejí z tabulky `economies`, filtrováno na Českou republiku a evropské státy.
-- U GINI koeficientu v tabulce `t_matous_turon_project_SQL_secondary_final` chybí hodnoty pro některé státy a roky — data nebyla doplňována, chybějící hodnoty zůstávají jako `NULL`.
-- Průměrné mzdy jsou počítány jako průměr přes všechna odvětví s výjimkou otázky č. 1 a č. 2, kde jsou uvedeny hodnoty za jednotlivá odvětví.
+- Veškerá analytika čerpá z tabulek `t_matous_turon_project_sql_primary_final` a `t_matous_turon_project_sql_secondary_final`.
+- Zdrojová data mezd jsou filtrována na průměrnou mzdu (`value_type_code = 5958`) a přepočtené úvazky (`calculation_code = 200`).
+- U GINI koeficientu v `t_matous_turon_project_sql_secondary_final` chybí hodnoty pro některé státy a roky — chybějící hodnoty zůstávají jako `NULL`.
+- Průměrné mzdy jsou počítány jako průměr přes všechna odvětví s výjimkou otázek č. 1 a č. 2, kde jsou uvedeny hodnoty za jednotlivá odvětví.
+- Data pokrývají období 2006–2018. Vzhledem k výpočtu meziročních změn pomocí LAG začínají analytické výsledky od roku 2007.
 
 ---
 
